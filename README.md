@@ -41,18 +41,30 @@ The goal of this project is to learn how GTFS works by exploring real public tra
 
 ```txt
 mobilit-gtfs-analyzer/
-├─ src/                # React frontend
-├─ backend/            # Node.js API
+├─ frontend/                  # React + Vite frontend
+│  ├─ src/
+│  ├─ public/
+│  ├─ package.json
+│  ├─ vite.config.ts
+│  └─ ...
+│
+├─ backend/                   # Node.js + Express API
 │  ├─ src/
 │  │  ├─ controllers/
 │  │  ├─ routes/
 │  │  ├─ services/
+│  │  ├─ store/
 │  │  ├─ types/
 │  │  └─ utils/
 │  │
-├─ tests/           # Tests unitaires
+│  ├─ tests/                  # Backend tests
+│  ├─ package.json
+│  ├─ tsconfig.json
+│  └─ ...
 │
 ├─ README.md
+├─ LICENSE
+└─ .gitignore
 ```
 
 ---
