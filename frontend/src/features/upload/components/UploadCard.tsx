@@ -5,14 +5,17 @@ import { uploadGtfsZip } from "../services/upload.service";
 import { analyzeGtfsDataset } from "../../dataset/services/dataset.service";
 import { analyzeGtfsRoutes } from "../../routes/services/routes.service";
 import { analyzeGtfsStops } from "../../stops/services/stops.service";
+import { analyzeGtfsTrips } from "../../trips/services/trips.service";
 
 import { DatasetSummaryCard } from "../../dataset/components/DatasetSummaryCard";
 import { RoutesExplorer } from "../../routes/components/RoutesExplorer";
 import { StopsExplorer } from "../../stops/components/StopsExplorer";
+import { TripsExplorer } from "../../trips/components/TripsExplorer";
 
 import type { GtfsDatasetSummary } from "../../dataset/types/dataset.types";
 import type { GtfsRoute } from "../../routes/types/routes.types";
 import type { GtfsStop } from "../../stops/types/stops.types";
+import type { GtfsTrip } from "../../trips/types/trips.types";
 
 export function UploadCard() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -20,10 +23,15 @@ export function UploadCard() {
   const [isUploading, setIsUploading] = useState(false);
 
   const [summary, setSummary] = useState<GtfsDatasetSummary | null>(null);
+
   const [routes, setRoutes] = useState<GtfsRoute[]>([]);
+
   const [stops, setStops] = useState<GtfsStop[]>([]);
   const [stopGroupCount, setStopGroupCount] = useState(0);
   const [coordinateIssueCount, setCoordinateIssueCount] = useState(0);
+
+  const [trips, setTrips] = useState<GtfsTrip[]>([]);
+  const [stopTimeCount, setStopTimeCount] = useState(0);
 
   async function handleUpload() {
     if (!selectedFile) {
@@ -34,9 +42,11 @@ export function UploadCard() {
     try {
       setIsUploading(true);
       setMessage("");
+
       setSummary(null);
       setRoutes([]);
       setStops([]);
+      setTrips([]);
 
       const uploadResult = await uploadGtfsZip(selectedFile);
       setMessage(uploadResult.message);
@@ -51,6 +61,10 @@ export function UploadCard() {
       setStops(stopsResult.stops);
       setStopGroupCount(stopsResult.groupCount);
       setCoordinateIssueCount(stopsResult.coordinateIssueCount);
+
+      const tripsResult = await analyzeGtfsTrips(selectedFile);
+      setTrips(tripsResult.trips);
+      setStopTimeCount(tripsResult.stopTimeCount);
     } catch {
       setMessage("Upload failed. Please try again.");
     } finally {
@@ -72,10 +86,7 @@ export function UploadCard() {
             coordinateIssueCount={coordinateIssueCount}
           />
 
-          <div className="rounded-[28px] bg-white/95 border border-slate-200/70 shadow-xl p-6">
-            <h2 className="text-xl font-bold text-slate-900">Voyages</h2>
-            <p className="mt-1 text-sm text-slate-500">Bloc à venir</p>
-          </div>
+          <TripsExplorer trips={trips} stopTimeCount={stopTimeCount} />
         </div>
       </div>
     );

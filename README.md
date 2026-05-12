@@ -119,7 +119,7 @@ http://localhost:3001
 - [x] Dataset explorer
 - [x] Route viewer
 - [x] Stop viewer
-- [ ] GTFS relationship visualization
+- [x] GTFS relationship visualization
 - [ ] Modern educational UI
 
 ---
