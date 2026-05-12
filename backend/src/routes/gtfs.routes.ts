@@ -6,6 +6,8 @@ import {
   inspectGtfsZipFile,
   parseGtfsFile,
   uploadGtfsFile,
+  validateGtfsDatasetFile,
+
 } from "../controllers/gtfs.controller.js";
 
 const router = express.Router();
@@ -33,3 +35,7 @@ export default router;
 // Analyze GTFS dataset summary
 
 router.post("/analyze", upload.single("gtfs"), analyzeGtfsDatasetFile);
+
+// Validate GTFS dataset
+
+router.post("/validate", upload.single("gtfs"), validateGtfsDatasetFile);
