@@ -11,6 +11,12 @@ import { validateGtfsDataset } from "../services/gtfs-validation.service.js";
 import { analyzeGtfsRoutes } from "../services/gtfs-routes.service.js";
 import { analyzeGtfsStops } from "../services/gtfs-stops.service.js";
 import { analyzeGtfsTrips } from "../services/gtfs-trips.service.js";
+import { randomUUID } from "crypto";
+import { buildGtfsIndex } from "../services/gtfs-index-builder.service.js";
+import {
+  getAllGtfsDatasets,
+  saveGtfsDataset,
+} from "../store/gtfs.store.js";
 
 // Handle GTFS zip upload request
 
@@ -214,4 +220,62 @@ export function analyzeGtfsTripsFile(req: Request, res: Response) {
       message,
     });
   }
+}
+
+// Store GTFS dataset in memory
+
+export function storeGtfsDatasetFile(req: Request, res: Response) {
+  try {
+    validateGtfsUpload(req.file);
+
+    const index = buildGtfsIndex(req.file!.buffer);
+
+    const dataset = {
+      id: randomUUID(),
+      createdAt: new Date().toISOString(),
+      fileName: req.file!.originalname,
+      index,
+    };
+
+    saveGtfsDataset(dataset);
+
+    return res.status(201).json({
+      success: true,
+      message: "GTFS dataset stored successfully",
+      dataset: {
+        id: dataset.id,
+        createdAt: dataset.createdAt,
+        fileName: dataset.fileName,
+        routeCount: index.routes.length,
+        stopCount: index.stops.length,
+        tripCount: index.trips.length,
+      },
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown GTFS store error";
+
+    return res.status(400).json({
+      success: false,
+      message,
+    });
+  }
+}
+
+// List stored GTFS datasets
+
+export function listStoredGtfsDatasets(_req: Request, res: Response) {
+  const datasets = getAllGtfsDatasets().map((dataset) => ({
+    id: dataset.id,
+    createdAt: dataset.createdAt,
+    fileName: dataset.fileName,
+    routeCount: dataset.index.routes.length,
+    stopCount: dataset.index.stops.length,
+    tripCount: dataset.index.trips.length,
+  }));
+
+  return res.status(200).json({
+    success: true,
+    datasets,
+  });
 }

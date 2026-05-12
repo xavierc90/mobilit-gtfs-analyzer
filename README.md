@@ -44,10 +44,14 @@ mobilit-gtfs-analyzer/
 ├─ src/                # React frontend
 ├─ backend/            # Node.js API
 │  ├─ src/
+│  │  ├─ controllers/
 │  │  ├─ routes/
 │  │  ├─ services/
-│  │  ├─ utils/
-│  │  └─ types/
+│  │  ├─ types/
+│  │  └─ utils/
+│  │
+├─ tests/           # Tests unitaires
+│
 ├─ README.md
 ```
 
