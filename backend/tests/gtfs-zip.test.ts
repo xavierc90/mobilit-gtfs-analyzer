@@ -14,7 +14,7 @@ function createGtfsZip(files: string[]) {
   return zip.toBuffer();
 }
 
-describe("GTFS zip inspection endpoint", () => {
+describe("📁 GTFS zip inspection endpoint", () => {
   it("should inspect a valid GTFS zip", async () => {
     const buffer = createGtfsZip([
       "agency.txt",

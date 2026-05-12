@@ -3,7 +3,7 @@ import request from "supertest";
 
 import app from "../src/app.js";
 
-describe("GTFS upload endpoint", () => {
+describe("🚀 GTFS upload endpoint", () => {
   it("should return an error when no file is uploaded", async () => {
     const response = await request(app).post("/gtfs/upload");
 
