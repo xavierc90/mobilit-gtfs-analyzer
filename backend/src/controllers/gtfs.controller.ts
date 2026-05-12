@@ -8,6 +8,8 @@ import { inspectGtfsZip } from "../services/gtfs-zip.service.js";
 import { parseGtfsFileFromZip } from "../services/gtfs-parser.service.js";
 import { analyzeGtfsDataset } from "../services/gtfs-dataset-analyzer.service.js";
 import { validateGtfsDataset } from "../services/gtfs-validation.service.js";
+import { analyzeGtfsRoutes } from "../services/gtfs-routes.service.js";
+
 
 // Handle GTFS zip upload request
 
@@ -132,6 +134,31 @@ export function validateGtfsDatasetFile(req: Request, res: Response) {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown GTFS validation error";
+
+    return res.status(400).json({
+      success: false,
+      message,
+    });
+  }
+}
+
+// Analyze GTFS routes
+
+export function analyzeGtfsRoutesFile(req: Request, res: Response) {
+  try {
+    validateGtfsUpload(req.file);
+
+    const result = analyzeGtfsRoutes(req.file!.buffer);
+
+    return res.status(200).json({
+    success: true,
+    message: "GTFS routes analyzed successfully",
+    ...result,
+    });
+
+    } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown GTFS routes error";
 
     return res.status(400).json({
       success: false,
