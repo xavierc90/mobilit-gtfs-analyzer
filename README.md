@@ -115,7 +115,7 @@ http://localhost:3001
 
 ### Frontend
 
-- [ ] Upload interface
+- [x] Upload interface
 - [ ] Dataset explorer
 - [ ] Route viewer
 - [ ] Stop viewer
