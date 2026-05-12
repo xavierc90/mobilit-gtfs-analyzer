@@ -117,8 +117,8 @@ http://localhost:3001
 
 - [x] Upload interface
 - [x] Dataset explorer
-- [ ] Route viewer
-- [ ] Stop viewer
+- [x] Route viewer
+- [x] Stop viewer
 - [ ] GTFS relationship visualization
 - [ ] Modern educational UI
 
