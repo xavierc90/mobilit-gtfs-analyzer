@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 
 import {
+  analyzeGtfsDatasetFile,
   inspectGtfsZipFile,
   parseGtfsFile,
   uploadGtfsFile,
@@ -28,3 +29,7 @@ router.post("/inspect-zip", upload.single("gtfs"), inspectGtfsZipFile);
 router.post("/parse-file", upload.single("gtfs"), parseGtfsFile);
 
 export default router;
+
+// Analyze GTFS dataset summary
+
+router.post("/analyze", upload.single("gtfs"), analyzeGtfsDatasetFile);

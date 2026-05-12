@@ -12,7 +12,7 @@ function createGtfsZipWithFile(fileName: string, content: string) {
   return zip.toBuffer();
 }
 
-describe("GTFS CSV parser endpoint", () => {
+describe("🧾 GTFS CSV parser endpoint", () => {
   it("should parse a GTFS txt file from a zip", async () => {
     const buffer = createGtfsZipWithFile(
       "routes.txt",
