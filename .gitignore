@@ -15,10 +15,13 @@ dist
 dist-ssr
 coverage
 
-# Env files
+# File environment 
 .env
-.env.*
-*.local
+.env*
+frontend/.env
+frontend/.env.*
+backend/.env
+backend/.env.*
 
 # TypeScript
 *.tsbuildinfo
