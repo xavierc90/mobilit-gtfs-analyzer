@@ -5,6 +5,7 @@ import {
   validateGtfsUpload,
 } from "../services/gtfs-upload.service.js";
 import { inspectGtfsZip } from "../services/gtfs-zip.service.js";
+import { parseGtfsFileFromZip } from "../services/gtfs-parser.service.js";
 
 // Handle GTFS zip upload request
 
@@ -46,6 +47,41 @@ export function inspectGtfsZipFile(req: Request, res: Response) {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown zip inspection error";
+
+    return res.status(400).json({
+      success: false,
+      message,
+    });
+  }
+}
+
+// Parse one GTFS text file from the uploaded zip
+
+export function parseGtfsFile(req: Request, res: Response) {
+  try {
+    validateGtfsUpload(req.file);
+
+    const fileName = req.body.fileName;
+
+    if (!fileName || typeof fileName !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "Missing GTFS file name",
+      });
+    }
+
+    const rows = parseGtfsFileFromZip(req.file!.buffer, fileName);
+
+    return res.status(200).json({
+      success: true,
+      message: "GTFS file parsed successfully",
+      fileName,
+      rowCount: rows.length,
+      rows,
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown GTFS parsing error";
 
     return res.status(400).json({
       success: false,
