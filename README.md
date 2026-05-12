@@ -104,13 +104,13 @@ http://localhost:3001
 
 ### Backend
 
-- [ ] GTFS zip upload
-- [ ] Zip extraction
-- [ ] CSV parser utilities
-- [ ] GTFS dataset validation
-- [ ] Routes analyzer
-- [ ] Stops analyzer
-- [ ] Trips analyzer
+- [x] GTFS zip upload
+- [x] Zip extraction
+- [x] CSV parser utilities
+- [x] GTFS dataset validation
+- [x] Routes analyzer
+- [x] Stops analyzer
+- [x] Trips analyzer
 - [ ] Calendar analyzer
 
 ### Frontend
