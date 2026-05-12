@@ -116,7 +116,7 @@ http://localhost:3001
 ### Frontend
 
 - [x] Upload interface
-- [ ] Dataset explorer
+- [x] Dataset explorer
 - [ ] Route viewer
 - [ ] Stop viewer
 - [ ] GTFS relationship visualization
