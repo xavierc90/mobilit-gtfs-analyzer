@@ -5,6 +5,7 @@ import {
   analyzeGtfsDatasetFile,
   analyzeGtfsRoutesFile,
   analyzeGtfsStopsFile,
+  analyzeGtfsTripsFile,
   inspectGtfsZipFile,
   parseGtfsFile,
   uploadGtfsFile,
@@ -39,5 +40,8 @@ router.post("/routes", upload.single("gtfs"), analyzeGtfsRoutesFile);
 
 // Analyze GTFS stops
 router.post("/stops", upload.single("gtfs"), analyzeGtfsStopsFile);
+
+// Analyze GTFS trips and stop times
+router.post("/trips", upload.single("gtfs"), analyzeGtfsTripsFile);
 
 export default router;

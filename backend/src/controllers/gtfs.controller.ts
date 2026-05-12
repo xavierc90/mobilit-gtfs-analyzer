@@ -10,6 +10,7 @@ import { analyzeGtfsDataset } from "../services/gtfs-dataset-analyzer.service.js
 import { validateGtfsDataset } from "../services/gtfs-validation.service.js";
 import { analyzeGtfsRoutes } from "../services/gtfs-routes.service.js";
 import { analyzeGtfsStops } from "../services/gtfs-stops.service.js";
+import { analyzeGtfsTrips } from "../services/gtfs-trips.service.js";
 
 // Handle GTFS zip upload request
 
@@ -183,6 +184,30 @@ export function analyzeGtfsStopsFile(req: Request, res: Response) {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unknown GTFS stops error";
+
+    return res.status(400).json({
+      success: false,
+      message,
+    });
+  }
+}
+
+// Analyze GTFS trips and stop times
+
+export function analyzeGtfsTripsFile(req: Request, res: Response) {
+  try {
+    validateGtfsUpload(req.file);
+
+    const result = analyzeGtfsTrips(req.file!.buffer);
+
+    return res.status(200).json({
+      success: true,
+      message: "GTFS trips analyzed successfully",
+      ...result,
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Unknown GTFS trips error";
 
     return res.status(400).json({
       success: false,
