@@ -4,6 +4,7 @@ import multer from "multer";
 import {
   analyzeGtfsDatasetFile,
   analyzeGtfsRoutesFile,
+  analyzeGtfsStopsFile,
   inspectGtfsZipFile,
   parseGtfsFile,
   uploadGtfsFile,
@@ -35,5 +36,8 @@ router.post("/validate", upload.single("gtfs"), validateGtfsDatasetFile);
 
 // Analyze GTFS routes
 router.post("/routes", upload.single("gtfs"), analyzeGtfsRoutesFile);
+
+// Analyze GTFS stops
+router.post("/stops", upload.single("gtfs"), analyzeGtfsStopsFile);
 
 export default router;
