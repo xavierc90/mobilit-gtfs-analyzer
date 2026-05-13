@@ -1,4 +1,5 @@
 import type { GtfsStop } from "../types/stops.types";
+import { RiMapPin2Line } from "react-icons/ri";
 
 type StopCardProps = {
   stop: GtfsStop;
@@ -14,8 +15,8 @@ export function StopCard({ stop }: StopCardProps) {
       }`}
     >
       <div className="flex items-start gap-3">
-        <div className="flex h-10 min-w-10 items-center justify-center rounded-xl bg-violet-100 text-sm font-bold text-violet-700">
-          📍
+        <div className="flex h-10 min-w-10 items-center justify-center rounded-xl bg-gray-100 text-sm font-bold text-violet-800">
+          <RiMapPin2Line size={22} />
         </div>
 
         <div className="min-w-0 flex-1">

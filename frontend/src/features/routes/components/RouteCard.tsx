@@ -9,7 +9,7 @@ export function RouteCard({ route }: RouteCardProps) {
     <article className="rounded-xl border border-slate-200 bg-white p-3 hover:bg-slate-50 transition">
       <div className="flex items-center gap-3">
         <div
-          className="flex h-10 min-w-10 items-center justify-center rounded-xl text-sm font-bold shadow-sm"
+          className="flex h-7 min-w-7 items-center justify-center rounded-md text-sm font-bold shadow-sm"
           style={{
             backgroundColor: route.color,
             color: route.textColor,
