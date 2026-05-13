@@ -2,7 +2,6 @@ import { DatasetSummaryCard } from "../features/dataset/components/DatasetSummar
 import { RoutesExplorer } from "../features/routes/components/RoutesExplorer";
 import { StopsExplorer } from "../features/stops/components/StopsExplorer";
 import { TripsExplorer } from "../features/trips/components/TripsExplorer";
-import { ValidationPanel } from "../features/validation/components/ValidationPanel";
 
 import type { GtfsDatasetSummary } from "../features/dataset/types/dataset.types";
 import type { GtfsRoute } from "../features/routes/types/routes.types";
@@ -24,7 +23,6 @@ type DatasetPageProps = {
 
 export function DatasetPage({
   summary,
-  validation,
   routes,
   stops,
   stopGroupCount,
@@ -97,7 +95,6 @@ export function DatasetPage({
             <TripsExplorer trips={trips} stopTimeCount={stopTimeCount} />
           </div>
 
-          {validation && <ValidationPanel validation={validation} />}
         </div>
       </main>
     </div>
