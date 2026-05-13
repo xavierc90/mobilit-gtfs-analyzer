@@ -99,17 +99,31 @@ if (summary) {
     />
   );
 }
-  return (
-      <div className="flex min-h-screen items-center justify-center px-6 py-10">
-    <div className="w-full max-w-[440px] rounded-[28px] bg-white/90 backdrop-blur-md shadow-2xl border border-white/40 p-8">
-      <div className="flex flex-col gap-6">
-        <div className="text-center">
-          <p className="text-[15px] text-gray-600 leading-relaxed">
-            Upload a GTFS dataset to explore routes, stops and trips.
+return (
+  <div className="flex min-h-screen items-center justify-center px-6 py-10">
+    <div className="w-full max-w-[460px] rounded-[32px] border border-white/40 bg-white/70 backdrop-blur-2xl shadow-[0_20px_80px_rgba(0,0,0,0.12)] p-8">
+      
+      <div className="flex flex-col items-center text-center">
+        
+        <img
+          src="/logo-mobilit.svg"
+          alt="Mobilit"
+          className="h-10 w-auto"
+        />
+
+        <div className="mt-6">
+          <h1 className="text-[28px] font-bold tracking-tight text-slate-950">
+            GTFS Analyzer
+          </h1>
+
+          <p className="mt-3 text-[15px] leading-relaxed text-slate-500">
+            Upload a GTFS dataset to explore routes,
+            stops, trips and validation results.
           </p>
         </div>
-        </div>
+      </div>
 
+      <div className="mt-8 flex flex-col gap-5">
         <label className="flex flex-col gap-3">
           <input
             type="file"
@@ -120,12 +134,16 @@ if (summary) {
             }}
           />
 
-          <div className="w-full rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 transition cursor-pointer px-5 py-8 text-center">
-            <p className="font-medium text-gray-700">
-              {selectedFile ? selectedFile.name : "Choose a GTFS zip file"}
+          <div className="cursor-pointer rounded-3xl border-2 border-dashed border-slate-300/80 bg-white/40 px-6 py-10 text-center transition hover:bg-white/60">
+            <p className="font-semibold text-slate-700">
+              {selectedFile
+                ? selectedFile.name
+                : "Choose a GTFS zip file"}
             </p>
 
-            <p className="text-sm text-gray-400 mt-2">.zip GTFS dataset</p>
+            <p className="mt-2 text-sm text-slate-400">
+              .zip GTFS dataset
+            </p>
           </div>
         </label>
 
@@ -133,17 +151,18 @@ if (summary) {
           type="button"
           onClick={handleUpload}
           disabled={isUploading}
-          className="w-full rounded-2xl bg-[#0f172a] hover:bg-[#111c35] transition text-white font-semibold py-4 text-[15px] shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+          className="h-[58px] rounded-2xl bg-[#0f172a] text-[15px] font-semibold text-white shadow-xl transition hover:bg-[#111c35] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isUploading ? "Analyzing..." : "Analyze GTFS"}
         </button>
 
         {message && (
-          <div className="rounded-2xl bg-gray-100 text-gray-700 px-4 py-3 text-sm">
+          <div className="rounded-2xl bg-white/50 px-4 py-3 text-sm text-slate-700">
             {message}
           </div>
         )}
       </div>
     </div>
-  );
+  </div>
+);
 }

@@ -45,7 +45,7 @@ export function DatasetPage({
 
         <div className="absolute bottom-6 left-6 right-6 rounded-2xl border border-slate-200 bg-white p-4">
           <p className="font-bold text-slate-900">GTFS Analyzer</p>
-          <p className="text-sm text-slate-500">Local dataset</p>
+          <p className="text-sm text-slate-500">Version 1.0</p>
         </div>
       </aside>
 
