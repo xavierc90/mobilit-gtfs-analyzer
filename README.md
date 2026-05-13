@@ -120,6 +120,7 @@ http://localhost:3001
 - [x] Route viewer
 - [x] Stop viewer
 - [x] GTFS relationship visualization
+- [x] Validation Panel 
 - [ ] Modern educational UI
 
 ---

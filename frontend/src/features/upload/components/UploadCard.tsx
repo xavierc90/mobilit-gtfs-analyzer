@@ -7,15 +7,14 @@ import { analyzeGtfsRoutes } from "../../routes/services/routes.service";
 import { analyzeGtfsStops } from "../../stops/services/stops.service";
 import { analyzeGtfsTrips } from "../../trips/services/trips.service";
 
-import { DatasetSummaryCard } from "../../dataset/components/DatasetSummaryCard";
-import { RoutesExplorer } from "../../routes/components/RoutesExplorer";
-import { StopsExplorer } from "../../stops/components/StopsExplorer";
-import { TripsExplorer } from "../../trips/components/TripsExplorer";
-
 import type { GtfsDatasetSummary } from "../../dataset/types/dataset.types";
 import type { GtfsRoute } from "../../routes/types/routes.types";
 import type { GtfsStop } from "../../stops/types/stops.types";
 import type { GtfsTrip } from "../../trips/types/trips.types";
+
+import { validateGtfsDataset } from "../../validation/services/validation.service";
+import type { GtfsValidationResult } from "../../validation/types/validation.types";
+import { DatasetPage } from "../../../pages/DatasetPage";
 
 export function UploadCard() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -32,6 +31,7 @@ export function UploadCard() {
 
   const [trips, setTrips] = useState<GtfsTrip[]>([]);
   const [stopTimeCount, setStopTimeCount] = useState(0);
+  const [validation, setValidation] = useState<GtfsValidationResult | null>(null);
 
   async function handleUpload() {
     if (!selectedFile) {
@@ -47,6 +47,7 @@ export function UploadCard() {
       setRoutes([]);
       setStops([]);
       setTrips([]);
+      setValidation(null);
 
       const uploadResult = await uploadGtfsZip(selectedFile);
       setMessage(uploadResult.message);
@@ -65,40 +66,48 @@ export function UploadCard() {
       const tripsResult = await analyzeGtfsTrips(selectedFile);
       setTrips(tripsResult.trips);
       setStopTimeCount(tripsResult.stopTimeCount);
-    } catch {
-      setMessage("Upload failed. Please try again.");
-    } finally {
-      setIsUploading(false);
+    
+      const validationResult = await validateGtfsDataset(selectedFile);
+        setValidation(validationResult.validation);
+        } catch {
+        setMessage("Upload failed. Please try again.");
+        } finally {
+        setIsUploading(false);
+        }
     }
-  }
 
-  if (summary) {
-    return (
-      <div className="w-full max-w-7xl space-y-6">
-        <DatasetSummaryCard summary={summary} />
-
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <RoutesExplorer routes={routes} />
-
-          <StopsExplorer
-            stops={stops}
-            groupCount={stopGroupCount}
-            coordinateIssueCount={coordinateIssueCount}
-          />
-
-          <TripsExplorer trips={trips} stopTimeCount={stopTimeCount} />
-        </div>
-      </div>
-    );
-  }
-
+if (summary) {
   return (
-    <div className="w-full rounded-[28px] bg-white/90 backdrop-blur-md shadow-2xl border border-white/40 p-8">
+    <DatasetPage
+      summary={summary}
+      validation={validation}
+      routes={routes}
+      stops={stops}
+      stopGroupCount={stopGroupCount}
+      coordinateIssueCount={coordinateIssueCount}
+      trips={trips}
+      stopTimeCount={stopTimeCount}
+      onReset={() => {
+        setSummary(null);
+        setRoutes([]);
+        setStops([]);
+        setTrips([]);
+        setValidation(null);
+        setSelectedFile(null);
+        setMessage("");
+      }}
+    />
+  );
+}
+  return (
+      <div className="flex min-h-screen items-center justify-center px-6 py-10">
+    <div className="w-full max-w-[440px] rounded-[28px] bg-white/90 backdrop-blur-md shadow-2xl border border-white/40 p-8">
       <div className="flex flex-col gap-6">
         <div className="text-center">
           <p className="text-[15px] text-gray-600 leading-relaxed">
             Upload a GTFS dataset to explore routes, stops and trips.
           </p>
+        </div>
         </div>
 
         <label className="flex flex-col gap-3">
